@@ -11,7 +11,8 @@ model User {
   id        String   @id @default(uuid()) @db.Char(36) 
   password  String                        
   email    String @unique            
-  name      String
+  firstName      String
+  lastName      String
   role     Role    @default(PACIENTE)           
   crm       String?
   refreshToken String? @db.Text
