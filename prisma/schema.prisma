@@ -11,7 +11,9 @@ model User {
   id        String   @id @default(uuid()) @db.Char(36) 
   password  String                        
   email    String @unique            
-  role      Role              
+  name      String
+  role     Role    @default(PACIENTE)           
+  crm       String?
   refreshToken String? @db.Text
   createdAt DateTime @default(now())    
   updatedAt DateTime @updatedAt         
@@ -22,6 +24,9 @@ model User {
 
 enum Role {
   ADMIN
-  USER
-  MANAGER
+  GESTOR
+  MEDICO
+  ENFERMEIRO
+  RECEPCIONISTA
+  PACIENTE
 }
