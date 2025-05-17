@@ -1,21 +1,29 @@
+import { ROLES } from "../constants/roles.mjs"
+
 export class User{
   constructor({email, password, firstName, lastName, crm, role, cargo}){
     this.email = email
     this.password = password
     this.firstName = firstName
     this.lastName = lastName
-    this.role = role || "PACIENTE"
+    this.role = role.toUpperCase()
     this.crm = crm
 
     this.validate()
   }
 
   validate(){
+
+   
+
     if(!this.firstName || !this.lastName || !this.email || !this.password){
       throw new Error("nome, email e senha  são obrigatorios.")
     }
-    if(this.role === "medico" && !this.crm ){
+    if(this.role === "MEDICO" && !this.crm ){
       throw new Error("Médico precisa ter um CRM cadastrado.")
+    }
+    if(!ROLES.includes(this.role)){
+      throw new Error("Role invalida, certifiquese de cadastrar uma Role existente.")
     }
   }
 

@@ -1,3 +1,5 @@
+import { ROLES } from "../../domain/constants/roles.mjs"
+
 export const validateUser = {
   email: {
     isEmail:{
@@ -54,8 +56,13 @@ export const validateUser = {
     isString:{
       errorMessage: "The ROLE must be of type String"
     },
+    isIn: {
+    options: [ROLES],
+    errorMessage: "Role inválida"
+  }
   },
   crm:{
+    optional: true,
     isString:{
       errorMessage: "The CRM must be of type String"
     }
