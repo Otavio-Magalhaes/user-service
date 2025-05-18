@@ -9,7 +9,7 @@ app.use(router)
 
 
 app.get("/", (request, response)=>{
-  response.send("Rodando")
+  response.send("User-service rodando ")
 })
 
 export default app
