@@ -6,4 +6,8 @@ export class UserRepository{
   async findByEmail(email){
     throw new Error('Method not Implemented.')
   }
+  
+  async getAll(){
+    throw new Error('Method not Implemented.')
+  }
 }

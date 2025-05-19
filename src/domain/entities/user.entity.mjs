@@ -13,29 +13,22 @@ export class User{
   }
 
   validate(){
-
-   
-
     if(!this.firstName || !this.lastName || !this.email || !this.password){
       throw new Error("nome, email e senha  são obrigatorios.")
     }
     if(this.role === "MEDICO" && !this.crm ){
       throw new Error("Médico precisa ter um CRM cadastrado.")
+    }else if(this.role !== "MEDICO" && this.crm ){
+      throw new Error("Somente Médico deve possuir CRM.")
     }
+    
     if(!ROLES.includes(this.role)){
       throw new Error("Role invalida, certifiquese de cadastrar uma Role existente.")
     }
   }
 
-  isMedico(){
-    return role == "MEDICO" ? true : false
-  }
-  isEnfermeiro(){
-    return role == "ENFERMEIRO" ? true : false
-  }
-
-  isPaciente(){
-    return role == "PACIENTE" ? true : false
+  hasRole(){
+    return this.role
   }
 
   toPlainObject(){
@@ -49,5 +42,4 @@ export class User{
       crm: this.crm
     }
   }
-
 }
