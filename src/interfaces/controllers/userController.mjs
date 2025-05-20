@@ -26,3 +26,17 @@ export const getAllUsers = async(request, response)=>{
     response.status(500).json({message: "Erro interno do servidor"})
   }
 }
+
+
+export const getUserByEmail = async (request, response) => {
+  const { email } = request.body
+  const user = await userRepository.findByEmail(email)
+  if (!user) return response.status(404).json({ error: 'Usuário não encontrado' })
+
+  response.json({
+    id: user.id,
+    password: user.password,
+    email: user.email,
+    role: user.role,
+  })
+}
