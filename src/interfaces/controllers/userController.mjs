@@ -1,10 +1,9 @@
-import { response } from "express"
 import { registerUser } from "../../domain/usecases/registerUser.mjs"
 import { UserPrismaRepository } from "../../infrastructure/database/prisma/UserPrismaRepository.mjs"
 
 
 const userRepository = new UserPrismaRepository
-
+ 
 export const registerUserController = async( request, response) =>{
   try{
     const userData = request.validated

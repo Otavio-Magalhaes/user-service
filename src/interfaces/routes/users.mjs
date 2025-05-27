@@ -7,11 +7,10 @@ import { validateInternalAPIKey } from "../../infrastructure/middlewares/validat
 
 const router = Router();
 
-router.post("/api/users", ...schemaValidator(validateUser), registerUserController)
-
 router.get("/api/users", validateAuth,getAllUsers)
 
-router.post("/api/users/email", validateInternalAPIKey,getUserByEmail)
+router.post("/api/users", ...schemaValidator(validateUser), registerUserController)
 
+router.post("/api/users/email", validateInternalAPIKey,getUserByEmail)
 
 export default router 
