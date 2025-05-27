@@ -1,14 +1,20 @@
 
 export const validateAuth = async (request, response, next )=>{
-  const logado = await fetch("http://auth-service:3000/api/auth/check",{
+  const res = await fetch("http://auth-service:3000/api/auth/check",{
     headers: {
       Authorization: request.headers['authorization']  
     }
   })
 
-  const result = await logado.json()
+  if (!res.ok) {
+    const error = await res.json();
+    console.log("Erro no auth-service:", error);
+    return response.status(res.status).json({ message: "Erro ao verificar usuário" });
+  }
 
-  if(logado.status != 200 || !result.user)
-    throw new Error("user nao esta logado")
+  const data = await res.json()
+
+  request.user = data.user
+ 
   next()
 }
