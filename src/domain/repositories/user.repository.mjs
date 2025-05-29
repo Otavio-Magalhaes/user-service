@@ -10,4 +10,8 @@ export class UserRepository{
   async getAll(){
     throw new Error('Method not Implemented.')
   }
+
+  async findById(id){
+    throw new Error('Method not Implemented.')
+  }
 }

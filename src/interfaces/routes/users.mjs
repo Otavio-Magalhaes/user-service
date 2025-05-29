@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {getAllUsers, getUserByEmail, registerUserController } from "../controllers/userController.mjs";
+import {getAllUsers, getUserByEmail, getUserById, registerUserController } from "../controllers/userController.mjs";
 import { validateUser } from "../schemas/validationUserSchema.mjs";
 import { schemaValidator } from "../../infrastructure/middlewares/schemaValidator.mjs";
 import { validateAuth } from "../../infrastructure/middlewares/validateAuth.mjs";
@@ -9,6 +9,8 @@ import { checkRole } from "../../infrastructure/middlewares/checkRole.mjs";
 const router = Router();
 
 router.get("/api/users", validateAuth, checkRole('ADMIN'), getAllUsers)
+
+router.get("/api/users/:id", validateAuth, getUserById)
 
 router.post("/api/users", ...schemaValidator(validateUser), registerUserController)
 
