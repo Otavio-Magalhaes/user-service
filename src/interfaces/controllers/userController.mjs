@@ -57,9 +57,7 @@ export const deleteUserById = async (request, response) =>{
 
 
   try {
-    if (request.user.role !== 'ADMIN' && request.user.role !== 'GESTOR') {
-      return response.status(403).json({ msg: "Você não tem permissão para deletar este usuário." });
-    }
+   
 
     const result = await userRepository.deleteById(id);
 

@@ -8,7 +8,7 @@ import { checkRole } from "../../infrastructure/middlewares/checkRole.mjs";
 
 const router = Router();
 
-router.get("/api/users", validateAuth, checkRole('ADMIN'), getAllUsers)
+router.get("/api/users", validateAuth, checkRole, getAllUsers)
 
 router.get("/api/users/:id", validateAuth, getUserById)
 
@@ -16,6 +16,6 @@ router.post("/api/users", ...schemaValidator(validateUser), registerUserControll
 
 router.post("/api/users/email", validateInternalAPIKey,getUserByEmail)
 
-router.delete("/api/users/:id", validateAuth, deleteUserById)
+router.delete("/api/users/:id", validateAuth,checkRole, deleteUserById)
 
 export default router 
