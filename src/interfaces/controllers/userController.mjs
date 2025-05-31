@@ -1,4 +1,5 @@
 import { registerUser } from "../../domain/usecases/registerUser.mjs"
+import { updateUser } from "../../domain/usecases/updateUser.mjs"
 import { UserPrismaRepository } from "../../infrastructure/database/prisma/UserPrismaRepository.mjs"
 
 
@@ -12,7 +13,7 @@ export const registerUserController = async (request, response) => {
     response.status(201).json({ msg: "User registered successfully" })
   } catch (err) {
     console.error("Register User Error:", err)
-    response.status(400).json({ error: err.message })
+    response.status(500).json({ "Erro Interno do Servidor." })
   }
 }
 
@@ -47,21 +48,15 @@ export const getUserById = async (request, response) => {
     if (!user) return response.status(404).json({ error: 'Usuario nao encontrado' })
     response.json(user)
   } catch (err) {
-    response.status(500).json({msg: "Erro interno do servidor"})
+    response.status(500).json({ msg: "Erro interno do servidor" })
   }
 }
 
-export const deleteUserById = async (request, response) =>{
- const { id } = request.params;
-
-
+export const deleteUser = async (request, response) => {
+  const { id } = request.params;
 
   try {
-   
-
     const result = await userRepository.deleteById(id);
-
-
     response.status(200).json({
       message: "Usuário deletado com sucesso",
       deletedUser: {
@@ -78,5 +73,20 @@ export const deleteUserById = async (request, response) =>{
 
     console.error("Erro ao deletar usuário:", err);
     response.status(500).json({ msg: "Erro Interno do Servidor" });
+  }
+}
+
+export const updateUserController = async (request, response) => {
+  try {
+    const userData = request.validated
+    const {id}  = request.params
+    const newUser = await updateUser(userRepository, id, userData)
+
+    response.status(200).json({msg: "User Updated Sucessfuly"})
+  } catch (err) {
+    if(err.message == "Medico necessita de um CRM"){
+      return response.status(403).json({msg:"Medico necessita de um CRM"})
+    }
+    response.status(500).json({msg: "Erro Interno do Servidor" })
   }
 }

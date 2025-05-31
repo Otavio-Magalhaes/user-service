@@ -68,3 +68,54 @@ export const validateUser = {
     }
   }
 }
+
+export const validateUpdateUser = {
+  firstName:{
+    optional: true,
+    isString:{
+      errorMessage: "The FristName must be of type String"
+    },
+    notEmpty:{
+      errorMessage: "The FristName field needs to be filled"
+    },
+    isLength:{
+      options:{
+        min:3,
+        max:32
+      },
+      errorMessage:"FristName must be between 3 and 32 characters"
+    }
+  },
+  lastName:{
+    optional: true,
+    isString:{
+      errorMessage: "The LastName must be of type String"
+    },
+    notEmpty:{
+      errorMessage: "The LastName field needs to be filled"
+    },
+    isLength:{
+      options:{
+        min:3,
+        max:40
+      },
+      errorMessage:"LastName must be between 3 and 40 characters"
+    }
+  },
+  role:{
+    optional: true,
+    isString:{
+      errorMessage: "The ROLE must be of type String"
+    },
+    isIn: {
+    options: [ROLES],
+    errorMessage: "Role Invalid"
+  }
+  },
+  crm:{
+    optional: true,
+    isString:{
+      errorMessage: "The CRM must be of type String"
+    }
+  }
+}

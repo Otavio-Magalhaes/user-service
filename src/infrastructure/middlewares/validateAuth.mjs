@@ -5,7 +5,7 @@ export const validateAuth = async (request, response, next )=>{
       Authorization: request.headers['authorization']  
     }
   })
-
+  
   if (!res.ok) {
     const error = await res.json();
     console.log("Erro no auth-service:", error);
@@ -13,8 +13,7 @@ export const validateAuth = async (request, response, next )=>{
   }
 
   const data = await res.json()
-
   request.user = data.user
- 
+
   next()
 }

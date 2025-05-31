@@ -43,6 +43,7 @@ export class UserPrismaRepository extends UserRepository {
         role: true,
         crm: true,
         firstName: true,
+        lastName: true
       }
     })
   }
@@ -53,6 +54,12 @@ export class UserPrismaRepository extends UserRepository {
     })
   }
 
-
-
+  async update(id, userData){
+   const user = await prisma.user.update({
+    where: { id },
+    data: userData
+  });
+  return user;
+  }
+  
 }
