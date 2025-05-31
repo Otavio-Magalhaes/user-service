@@ -13,7 +13,7 @@ export const registerUserController = async (request, response) => {
     response.status(201).json({ msg: "User registered successfully" })
   } catch (err) {
     console.error("Register User Error:", err)
-    response.status(500).json({ "Erro Interno do Servidor." })
+    response.status(500).json({ msg:"Erro Interno do Servidor." })
   }
 }
 
