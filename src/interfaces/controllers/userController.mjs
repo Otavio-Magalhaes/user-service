@@ -1,3 +1,4 @@
+import { changeUserPassword } from "../../domain/usecases/changeUserPassword.mjs"
 import { registerUser } from "../../domain/usecases/registerUser.mjs"
 import { updateUser } from "../../domain/usecases/updateUser.mjs"
 import { UserPrismaRepository } from "../../infrastructure/database/prisma/UserPrismaRepository.mjs"
@@ -13,7 +14,7 @@ export const registerUserController = async (request, response) => {
     response.status(201).json({ msg: "User registered successfully" })
   } catch (err) {
     console.error("Register User Error:", err)
-    response.status(500).json({ msg:"Erro Interno do Servidor." })
+    response.status(500).json({ msg: "Internal server error." })
   }
 }
 
@@ -23,7 +24,7 @@ export const getAllUsers = async (request, response) => {
     response.status(200).json(users)
   } catch (err) {
     console.log(err)
-    response.status(500).json({ message: "Erro interno do servidor" })
+    response.status(500).json({ message: "Internal server error" })
   }
 }
 
@@ -48,7 +49,7 @@ export const getUserById = async (request, response) => {
     if (!user) return response.status(404).json({ error: 'Usuario nao encontrado' })
     response.json(user)
   } catch (err) {
-    response.status(500).json({ msg: "Erro interno do servidor" })
+    response.status(500).json({ msg: "Internal server error" })
   }
 }
 
@@ -72,21 +73,39 @@ export const deleteUser = async (request, response) => {
     }
 
     console.error("Erro ao deletar usuário:", err);
-    response.status(500).json({ msg: "Erro Interno do Servidor" });
+    response.status(500).json({ msg: "Internal server error" });
   }
 }
 
 export const updateUserController = async (request, response) => {
   try {
     const userData = request.validated
-    const {id}  = request.params
+    const { id } = request.params
     const newUser = await updateUser(userRepository, id, userData)
 
-    response.status(200).json({msg: "User Updated Sucessfuly"})
+    response.status(200).json({ msg: "User Updated Sucessfuly" })
   } catch (err) {
-    if(err.message == "Medico necessita de um CRM"){
-      return response.status(403).json({msg:"Medico necessita de um CRM"})
+    if (err.message == "Medico necessita de um CRM") {
+      return response.status(403).json({ msg: "Medico necessita de um CRM" })
     }
-    response.status(500).json({msg: "Erro Interno do Servidor" })
+    response.status(500).json({ msg: "Internal server error" })
+  }
+}
+
+
+export const changePasswordController = async (request, response) => {
+  try {
+    const { currentPassword, newPassword } = request.validated
+    const user = request.user
+    const {id} = request.params
+    if(id !== user.id){
+      response.status(401).json({msg: "you do not have the permission to exchange password"})
+    }
+
+    const resultChangePassword = await changeUserPassword(userRepository, id, currentPassword, newPassword)
+    response.status(200).json({msg: "Password changed successfully"})
+  } catch (err) {
+    console.log(err)
+    response.status(500).json({msg:"Internal server error"})
   }
 }

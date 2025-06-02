@@ -62,4 +62,18 @@ export class UserPrismaRepository extends UserRepository {
   return user;
   }
   
+  async getPassword(id){
+    const currentPassword = await prisma.user.findUnique({
+      where: {id},
+      select: {password: true}
+    })
+    return currentPassword.password
+  }
+
+  async updatePassword(id, password){
+    const user = await prisma.user.update({
+      where:{id},
+      data: {password}
+    })
+  }
 }

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {deleteUser, getAllUsers, getUserByEmail, getUserById, registerUserController, updateUserController } from "../controllers/userController.mjs";
-import { validateUpdateUser, validateUser } from "../schemas/validationUserSchema.mjs";
+import {changePasswordController, deleteUser, getAllUsers, getUserByEmail, getUserById, registerUserController, updateUserController } from "../controllers/userController.mjs";
+import { validateChangePassword, validateUpdateUser, validateUser } from "../schemas/validationUserSchema.mjs";
 import { schemaValidator } from "../../infrastructure/middlewares/schemaValidator.mjs";
 import { validateAuth } from "../../infrastructure/middlewares/validateAuth.mjs";
 import { validateInternalAPIKey } from "../../infrastructure/middlewares/validateInternalAPIKey.mjs";
@@ -19,5 +19,7 @@ router.post("/api/users/email", validateInternalAPIKey,getUserByEmail)
 router.patch("/api/users/:id", validateAuth,...schemaValidator(validateUpdateUser) ,updateUserController)
 
 router.delete("/api/users/:id", validateAuth, checkRole, deleteUser)
+
+router.patch("/api/users/:id/change-password", validateAuth, ...schemaValidator(validateChangePassword) ,changePasswordController)
 
 export default router 

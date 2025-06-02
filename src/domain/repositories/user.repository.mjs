@@ -22,5 +22,13 @@ export class UserRepository{
   async updateUser(id, data){
     throw new Error('Method not Implemented.')
   }
+
+  async getPassword (id){
+    throw new Error('Method not Implemented.')
+  }
+
+  async updatePassword(id, password){
+    throw new Error('Method not Implemented.')
+  }
   
 }

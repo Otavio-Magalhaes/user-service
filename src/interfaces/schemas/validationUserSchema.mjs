@@ -119,3 +119,23 @@ export const validateUpdateUser = {
     }
   }
 }
+
+export const validateChangePassword = {
+  currentPassword:{
+    isString:{
+      errorMessage: "The CRM must be of type String"
+    },
+    notEmpty:{
+      errorMessage: "The currentPassword field needs to be filled"
+    },
+  },
+  newPassword:{
+    matches:{
+      options: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{6,}$/, 
+      errorMessage: "The NEW PASSWORD must contain uppercase, lowercase and special characters" 
+    },
+    notEmpty:{
+      errorMessage: "The New Password field needs to be filled"
+    },
+  }
+}
